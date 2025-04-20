@@ -5,6 +5,17 @@
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>disable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Generic ADO.Net client</Title>
+		<Version>9.0.0</Version>
+		<Authors>Stoyan Zlatev</Authors>
+		<Description>GenericDbClient is a lightweight and fluent ADO.NET wrapper designed to simplify database access in .NET projects using any provider (SQL Server, PostgreSQL, SQLite, etc).</Description>
+		<Copyright>© 2025 Stoyan Zlatev. All rights reserved.</Copyright>
+		<PackageProjectUrl>https://github.com/spzvtbg/KitItSimple</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/spzvtbg/KitItSimple.git</RepositoryUrl>
+		<PackageTags>ADO.NET, DB, ADO, SQL, Database, Fluent</PackageTags>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
@@ -78,5 +89,16 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
 	  <NoWarn>IDE0028;IDE0031;IDE0034;IDE0046;IDE0074;IDE1005;IDE1701;IDE1702;</NoWarn>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\LICENSE.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
