@@ -8,8 +8,7 @@
 - Fluent API for SQL command execution.
 - Safe parameter binding.
 - Lightweight reader abstraction.
-- Optional logging support (coming soon).
-- Async support (coming soon).
+- Optional logging support.
 
 ## 📦 Example Usage
 
