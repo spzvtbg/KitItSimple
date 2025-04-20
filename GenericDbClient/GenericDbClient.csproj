@@ -79,8 +79,4 @@
 	  <NoWarn>IDE0028;IDE0031;IDE0034;IDE0046;IDE0074;IDE1005;IDE1701;IDE1702;</NoWarn>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <None Include="https:\github.com\spzvtbg\KitItSimple\blob\master\README.md" />
-	</ItemGroup>
-
 </Project>
