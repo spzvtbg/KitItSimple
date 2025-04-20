@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitItSimple.DbClient", "KitItSimple.DbClient\KitItSimple.DbClient.csproj", "{75653CE5-872D-4E0F-BBB3-0518B0B7A5A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KitItSimple.DbClient.Console", "KitItSimple.DbClient.Console\KitItSimple.DbClient.Console.csproj", "{5DE3FD6E-6C95-43B0-9F81-5ACE938E167D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75653CE5-872D-4E0F-BBB3-0518B0B7A5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75653CE5-872D-4E0F-BBB3-0518B0B7A5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75653CE5-872D-4E0F-BBB3-0518B0B7A5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75653CE5-872D-4E0F-BBB3-0518B0B7A5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE3FD6E-6C95-43B0-9F81-5ACE938E167D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE3FD6E-6C95-43B0-9F81-5ACE938E167D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE3FD6E-6C95-43B0-9F81-5ACE938E167D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE3FD6E-6C95-43B0-9F81-5ACE938E167D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3AD0163-69CD-4B3D-8A67-4A0422981240}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0;net48;net47;net46;net45;net35;</TargetFrameworks>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net47|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net46|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net35|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net47|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net46|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net35|AnyCPU'">
+	  <NoWarn>IDE0028;IDE0034;IDE0046;IDE0074;IDE1701;IDE1702;</NoWarn>
+	</PropertyGroup>
+
+</Project>
