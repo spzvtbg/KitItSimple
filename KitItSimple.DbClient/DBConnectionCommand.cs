@@ -2,26 +2,40 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Common;
+    using System.Data;
 
     public class DBConnectionCommand : DBCommand
     {
-        internal DBConnectionCommand(DbCommand dbCommand, string commandText) : base(dbCommand, commandText)
+        private readonly IDbConnection dbConnection;
+
+        internal DBConnectionCommand(IDbConnection dbConnection, string commandText)
         {
+            this.dbConnection = dbConnection;
+            this.dbCommand = this.dbConnection.CreateCommand();
+            this.dbCommand.CommandText = commandText;
         }
 
         public override int ExecuteNonQuery()
         {
             var rowsAffected = default(int);
 
-            using (var dbConnection = this.dbCommand.Connection)
+            try
             {
-                dbConnection.Open();
-
-                using (this.dbCommand)
+                using (this.dbConnection)
                 {
-                    rowsAffected = this.dbCommand.ExecuteNonQuery();
+                    this.dbConnection.Open();
+
+                    using (this.dbCommand)
+                    {
+                        rowsAffected = this.dbCommand.ExecuteNonQuery();
+
+                        this.dbCommand.Log();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
 
             return rowsAffected;
@@ -29,22 +43,31 @@
 
         public override void ExecuteReader(Action<DBReader> readHandler)
         {
-            using (var dbConnection = this.dbCommand.Connection)
+            try
             {
-                dbConnection.Open();
-
-                using (this.dbCommand)
+                using (this.dbConnection)
                 {
-                    using (var dbDataReader = this.dbCommand.ExecuteReader())
-                    {
-                        DBReader dBReader = dbDataReader;
+                    this.dbConnection.Open();
 
-                        while (dBReader.Read())
+                    using (this.dbCommand)
+                    {
+                        using (var dataReader = this.dbCommand.ExecuteReader())
                         {
-                            readHandler(dBReader);
+                            var dbReader = new DBReader(dataReader);
+
+                            while (dbReader.Read())
+                            {
+                                readHandler(dbReader);
+                            }
                         }
+
+                        this.dbCommand.Log();
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
         }
 
@@ -52,24 +75,33 @@
         {
             var results = new List<T>();
 
-            using (var dbConnection = this.dbCommand.Connection)
+            try
             {
-                dbConnection.Open();
-
-                using (this.dbCommand)
+                using (this.dbConnection)
                 {
-                    using (var dbDataReader = this.dbCommand.ExecuteReader())
+                    this.dbConnection.Open();
+
+                    using (this.dbCommand)
                     {
-                        DBReader dBReader = dbDataReader;
-
-                        while (dBReader.Read())
+                        using (var dataReader = this.dbCommand.ExecuteReader())
                         {
-                            var value = readHandler(dBReader);
+                            var dbReader = new DBReader(dataReader);
 
-                            results.Add(value);
+                            while (dbReader.Read())
+                            {
+                                var value = readHandler(dbReader);
+
+                                results.Add(value);
+                            }
                         }
+
+                        this.dbCommand.Log();
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
 
             return results;
@@ -79,16 +111,25 @@
         {
             var result = default(T);
 
-            using (var dbConnection = this.dbCommand.Connection)
+            try
             {
-                dbConnection.Open();
-
-                using (this.dbCommand)
+                using (this.dbConnection)
                 {
-                    result = this.dbCommand
-                        .ExecuteScalar()
-                        .TryParseValueOrDefault<T>();
+                    this.dbConnection.Open();
+
+                    using (this.dbCommand)
+                    {
+                        result = this.dbCommand
+                            .ExecuteScalar()
+                            .TryParseValueOrDefault<T>();
+
+                        this.dbCommand.Log();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
 
             return result;

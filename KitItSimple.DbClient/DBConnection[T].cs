@@ -1,9 +1,9 @@
 ﻿namespace KitItSimple.DbClient
 {
     using System;
-    using System.Data.Common;
+    using System.Data;
 
-    public class DBConnection<T> where T : DbConnection, new()
+    public class DBConnection<T> where T : IDbConnection, new()
     {
         private readonly string connectionString;
         private readonly T dbConnection;
@@ -16,16 +16,23 @@
 
         public void BeginTransaction(Action<DBTransaction> dbTransactionBody)
         {
-            using (this.dbConnection)
+            try
             {
-                this.dbConnection.ConnectionString = this.connectionString;
-
-                this.dbConnection.Open();
-
-                using (var dbTransaction = this.dbConnection.BeginTransaction())
+                using (this.dbConnection)
                 {
-                    dbTransactionBody(dbTransaction);
+                    this.dbConnection.ConnectionString = this.connectionString;
+
+                    this.dbConnection.Open();
+
+                    using (var dbTransaction = this.dbConnection.BeginTransaction())
+                    {
+                        dbTransactionBody(new DBTransaction(dbTransaction));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
         }
 
@@ -33,16 +40,23 @@
         {
             var result = default(TResult);
 
-            using (this.dbConnection)
+            try
             {
-                this.dbConnection.ConnectionString = this.connectionString;
-
-                this.dbConnection.Open();
-
-                using (var dbTransaction = this.dbConnection.BeginTransaction())
+                using (this.dbConnection)
                 {
-                    result = dbTransactionBody(dbTransaction);
+                    this.dbConnection.ConnectionString = this.connectionString;
+
+                    this.dbConnection.Open();
+
+                    using (var dbTransaction = this.dbConnection.BeginTransaction())
+                    {
+                        result = dbTransactionBody(new DBTransaction(dbTransaction));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                e.Log();
             }
 
             return result;
@@ -51,16 +65,25 @@
         public DBCommand CreateCommand(string commandText)
         {
             this.dbConnection.ConnectionString = this.connectionString;
-            var dbCommand = this.dbConnection.CreateCommand();
 
-            return new DBConnectionCommand(dbCommand, commandText);
+            return new DBConnectionCommand(this.dbConnection, commandText);
         }
 
         public static DBConnection<T> ConfigureConnection(Action<T> dbConnectionBuilder)
         {
             var dbConnection = new T();
 
-            dbConnectionBuilder?.Invoke(dbConnection);
+            if (dbConnectionBuilder != null)
+            {
+                try
+                {
+                    dbConnectionBuilder(dbConnection);
+                }
+                catch (Exception e)
+                {
+                    e.Log();
+                }
+            }
 
             return new DBConnection<T>(dbConnection);
         }

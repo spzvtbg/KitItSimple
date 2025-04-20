@@ -1,13 +1,17 @@
 ﻿namespace KitItSimple.DbClient
 {
-    using System.Collections.Generic;
     using System;
-    using System.Data.Common;
+    using System.Collections.Generic;
+    using System.Data;
 
     public class DBTransactionCommand : DBCommand
     {
-        internal DBTransactionCommand(DbCommand dbCommand, string commandText) : base(dbCommand, commandText)
+        internal DBTransactionCommand(IDbCommand dbCommand, string commandText)
         {
+            this.dbCommand = dbCommand;
+            this.dbCommand.CommandText = commandText;
+
+            this.dbCommand.Parameters.Clear();
         }
 
         public override int ExecuteNonQuery()
@@ -17,6 +21,8 @@
             using (this.dbCommand)
             {
                 rowsAffected = this.dbCommand.ExecuteNonQuery();
+
+                this.dbCommand.Log();
             }
 
             return rowsAffected;
@@ -26,14 +32,16 @@
         {
             using (this.dbCommand)
             {
-                using (var dbDataReader = this.dbCommand.ExecuteReader())
+                using (var dataReader = this.dbCommand.ExecuteReader())
                 {
-                    DBReader dBReader = dbDataReader;
+                    var dbReader = new DBReader(dataReader);
 
-                    while (dBReader.Read())
+                    while (dbReader.Read())
                     {
-                        readHandler(dBReader);
+                        readHandler(dbReader);
                     }
+
+                    this.dbCommand.Log();
                 }
             }
         }
@@ -44,16 +52,18 @@
 
             using (this.dbCommand)
             {
-                using (var dbDataReader = this.dbCommand.ExecuteReader())
+                using (var dataReader = this.dbCommand.ExecuteReader())
                 {
-                    DBReader dBReader = dbDataReader;
+                    var dbReader = new DBReader(dataReader);
 
-                    while (dBReader.Read())
+                    while (dbReader.Read())
                     {
-                        var value = readHandler(dBReader);
+                        var value = readHandler(dbReader);
 
                         results.Add(value);
                     }
+
+                    this.dbCommand.Log();
                 }
             }
 
@@ -69,6 +79,8 @@
                 result = this.dbCommand
                     .ExecuteScalar()
                     .TryParseValueOrDefault<T>();
+
+                this.dbCommand.Log();
             }
 
             return result;

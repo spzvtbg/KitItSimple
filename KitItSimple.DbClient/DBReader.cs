@@ -1,18 +1,18 @@
 ﻿namespace KitItSimple.DbClient
 {
-    using System.Data.Common;
+    using System.Data;
 
     public class DBReader
     {
-        private readonly DbDataReader dbDataReader;
+        private readonly IDataReader dataReader;
 
-        private DBReader(DbDataReader dbDataReader) => this.dbDataReader = dbDataReader;
+        internal DBReader(IDataReader dataReader) => this.dataReader = dataReader;
 
         public T GetValue<T>(int columnIndex)
         {
-            if (0 <= columnIndex && columnIndex < this.dbDataReader.FieldCount && !this.dbDataReader.IsDBNull(columnIndex))
+            if (0 <= columnIndex && columnIndex < this.dataReader.FieldCount && !this.dataReader.IsDBNull(columnIndex))
             {
-                return this.dbDataReader
+                return this.dataReader
                     .GetValue(columnIndex)
                     .TryParseValueOrDefault<T>();
             }
@@ -20,9 +20,6 @@
             return default;
         }
 
-        public bool Read() => this.dbDataReader.Read();
-
-        public static implicit operator DBReader(DbDataReader dbDataReader)
-            => new DBReader(dbDataReader);
+        public bool Read() => this.dataReader.Read();
     }
 }

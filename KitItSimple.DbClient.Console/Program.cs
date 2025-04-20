@@ -2,10 +2,11 @@
 {
     using System;
     using System.Data.SqlClient;
+    using System.Diagnostics;
 
     internal class Program
     {
-        const string CONNECTION_STRING
+        private const string CONNECTION_STRING
             = "Data Source=SPZVTBG;"
             + "Integrated Security=True;"
             + "Connect Timeout=30;"
@@ -14,21 +15,22 @@
             + "ApplicationIntent=ReadWrite;"
             + "MultiSubnetFailover=False;";
 
-        static void Main(string[] args)
+        private static void Main()
         {
-            var connection = DBConnection<SqlConnection>.ConfigureConnection(sqlConnection =>
-            {
-                sqlConnection.ConnectionString = new SqlConnectionStringBuilder
+            var stopwatch = Stopwatch.StartNew();
+            DBClient.AddLogger(Console.WriteLine);
+            var connection = DBConnection<SqlConnection>.ConfigureConnection(sqlConnection
+                => sqlConnection.ConnectionString = new SqlConnectionStringBuilder
                 {
                     ConnectTimeout = 30_000,
                     DataSource = "spzvtbg",
                     IntegratedSecurity = true,
                     Encrypt = false,
                     TrustServerCertificate = true,
-
-                }.ConnectionString;
-            });
+                }
+                .ConnectionString);
             var parameter = DateTime.Now;
+
             var result = connection
                 .CreateCommand($@"SELECT @{nameof(parameter)}")
                 .SetParameter(nameof(parameter), DateTime.Now)
@@ -66,7 +68,10 @@
 
                     return DateTime.Now;
                 });
+
             Console.WriteLine($"{result:yyyy-MM-dd HH:mm:ss.fffffff}");
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
         }
     }
 }

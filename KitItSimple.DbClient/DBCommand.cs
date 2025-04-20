@@ -3,19 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Data.Common;
 
     public abstract class DBCommand
     {
-        protected readonly DbCommand dbCommand;
-
-        protected DBCommand(DbCommand dbCommand, string commandText)
-        {
-            this.dbCommand = dbCommand;
-            this.dbCommand.CommandText = commandText;
-
-            this.dbCommand.Parameters.Clear();
-        }
+        protected IDbCommand dbCommand;
 
         public abstract int ExecuteNonQuery();
 

@@ -1,12 +1,12 @@
 ﻿namespace KitItSimple.DbClient
 {
-    using System.Data.Common;
+    using System.Data;
 
     public class DBTransaction
     {
-        private readonly DbTransaction dbTransaction;
+        private readonly IDbTransaction dbTransaction;
 
-        internal DBTransaction(DbTransaction dbTransaction) => this.dbTransaction = dbTransaction;
+        internal DBTransaction(IDbTransaction dbTransaction) => this.dbTransaction = dbTransaction;
 
         public void CommitTransaction() => this.dbTransaction.Commit();
 
@@ -18,17 +18,6 @@
             return new DBTransactionCommand(dbCommand, commandText);
         }
 
-#if NET5_0_OR_GREATER
-        public void ReleaseSavePoint(string name) => this.dbTransaction.Release(name);
-#endif
-
         public void RollbackTransaction() => this.dbTransaction.Rollback();
-
-#if NET5_0_OR_GREATER
-        public void CreateSavePoint(string name) => this.dbTransaction.Save(name);
-#endif
-
-        public static implicit operator DBTransaction(DbTransaction dbTransaction)
-            => new DBTransaction(dbTransaction);
     }
 }
