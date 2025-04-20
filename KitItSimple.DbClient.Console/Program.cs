@@ -30,39 +30,47 @@
                     TrustServerCertificate = true,
                 }
                 .ConnectionString);
-            var now = DateTime.Now;
 
-            var result = connection
-                .CreateCommand($@"SELECT @{nameof(now)}")
-                .SetParameter(nameof(now), DateTime.Now)
-                .ExecuteScalar<DateTime>();
+            var results = connection
+                .CreateCommand($@"
+                    SELECT Id
+                         , Name
+                      FROM Table
+                     WHERE Name LIKE @pattern")
+                .SetParameter("pattern", "%doe%")
+                .ExecuteReader(x => new 
+                {
+                    Id = x.GetValue<int>(0),
+                    Name = x.GetValue<string>(1)
+                    // ...
+                });
 
-            result = connection
+            connection
                 .BeginTransaction(transaction =>
                 {
-                    result = transaction
-                        .CreateCommand($@"SELECT @{nameof(now)}")
-                        .SetParameter(nameof(now), DateTime.Now)
-                        .ExecuteScalar<DateTime>();
+                    var updatedCount = 0;
 
-                    result = transaction
-                        .CreateCommand($@"SELECT @{nameof(now)}")
-                        .SetParameter(nameof(now), DateTime.Now)
-                        .ExecuteScalar<DateTime>();
+                    foreach (var result in results)
+                    {
+                        var rowsAffected = transaction
+                            .CreateCommand($@"
+                                UPDATE Table
+                                   SET Column = @{nameof(result)}
+                                 WHERE Id = @{nameof(result.Id)}")
+                            .SetParameter(nameof(result.Id), result.Id)
+                            .SetParameter(nameof(result), $"{result.Id}.{result.Name}")
+                            .ExecuteNonQuery();
+                        updatedCount += rowsAffected;
+                    }
 
-                    result = transaction
-                        .CreateCommand($@"SELECT @{nameof(now)}")
-                        .SetParameter(nameof(now), DateTime.Now)
-                        .ExecuteScalar<DateTime>();
-
-                    result = transaction
-                        .CreateCommand($@"SELECT @{nameof(now)}")
-                        .SetParameter(nameof(now), null)
-                        .ExecuteScalar<DateTime>();
-
-                    transaction.CommitTransaction();
-
-                    return DateTime.Now;
+                    if (updatedCount > results.Count)
+                    {
+                        transaction.CommitTransaction();
+                    }
+                    else
+                    {
+                        transaction.RollbackTransaction();
+                    }
                 });
         }
     }
