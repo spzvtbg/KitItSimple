@@ -44,7 +44,7 @@ var results = connection
 connection
     .BeginTransaction(transaction =>
     {
-        var updatedCount = 0;
+        var updatedRecordsCount = 0;
 
         foreach (var result in results)
         {
@@ -56,10 +56,10 @@ connection
                 .SetParameter(nameof(result.Id), result.Id)
                 .SetParameter(nameof(result), $"{result.Id}.{result.Name}")
                 .ExecuteNonQuery();
-            updatedCount += rowsAffected;
+            updatedRecordsCount += rowsAffected;
         }
 
-        if (updatedCount > results.Count)
+        if (updatedRecordsCount > results.Count)
         {
             transaction.CommitTransaction();
         }
