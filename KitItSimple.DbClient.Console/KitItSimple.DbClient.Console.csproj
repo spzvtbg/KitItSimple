@@ -50,9 +50,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KitItSimple.DbClient\KitItSimple.DbClient.csproj">
+    <ProjectReference Include="..\GenericDbClient\GenericDbClient.csproj">
       <Project>{75653ce5-872d-4e0f-bbb3-0518b0b7a5a2}</Project>
-      <Name>KitItSimple.DbClient</Name>
+      <Name>GenericDbClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

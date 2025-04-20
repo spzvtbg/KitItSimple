@@ -1,4 +1,4 @@
-﻿namespace KitItSimple.DbClient
+﻿namespace GenericDbClient
 {
     using System.Data;
 

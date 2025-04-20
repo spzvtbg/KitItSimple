@@ -1,4 +1,4 @@
-﻿namespace KitItSimple.DbClient
+﻿namespace GenericDbClient
 {
     using System.Data;
 
@@ -10,6 +10,9 @@
 
         public void CommitTransaction() => this.dbTransaction.Commit();
 
+        /// <summary>
+        /// <inheritdoc cref="IDbConnection.CreateCommand()"/>
+        /// </summary>
         public DBCommand CreateCommand(string commandText)
         {
             var dbCommand = this.dbTransaction.Connection.CreateCommand();

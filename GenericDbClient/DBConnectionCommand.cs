@@ -1,4 +1,4 @@
-﻿namespace KitItSimple.DbClient
+﻿namespace GenericDbClient
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,9 @@
             this.dbCommand.CommandText = commandText;
         }
 
+        /// <summary>
+        /// <inheritdoc cref="IDbCommand.ExecuteNonQuery()"/>
+        /// </summary>
         public override int ExecuteNonQuery()
         {
             var rowsAffected = default(int);
@@ -41,6 +44,9 @@
             return rowsAffected;
         }
 
+        /// <summary>
+        /// <inheritdoc cref="IDbCommand.ExecuteReader()"/>
+        /// </summary>
         public override void ExecuteReader(Action<DBReader> readHandler)
         {
             try
@@ -71,6 +77,9 @@
             }
         }
 
+        /// <summary>
+        /// <inheritdoc cref="IDbCommand.ExecuteReader()"/>
+        /// </summary>
         public override List<T> ExecuteReader<T>(Func<DBReader, T> readHandler)
         {
             var results = new List<T>();
@@ -107,6 +116,9 @@
             return results;
         }
 
+        /// <summary>
+        /// <inheritdoc cref="IDbCommand.ExecuteScalar()"/>
+        /// </summary>
         public override T ExecuteScalar<T>()
         {
             var result = default(T);

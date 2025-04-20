@@ -1,4 +1,4 @@
-﻿namespace KitItSimple.DbClient
+﻿namespace GenericDbClient
 {
     using System;
     using System.Collections.Generic;
@@ -40,34 +40,33 @@
             return tryParseParameters[1] is T parsedValue ? parsedValue : default;
         }
 
-        internal static void Log(this object content)
+        internal static void Log(this object content) => LogContent(content);
+
+        internal static void Log(this IDbCommand sqlCommand)
         {
             if (loggingAction != null)
             {
-                loggingAction($"{content}");
+                var content = $"Executed: {sqlCommand.CommandText}";
+
+                if (sqlCommand.Parameters.Count > 0)
+                {
+                    content += " Parameters:";
+
+                    foreach (IDataParameter parameter in sqlCommand.Parameters)
+                    {
+                        content += $" @{parameter.ParameterName} = {parameter.Value} of type: {parameter.DbType};";
+                    }
+
+                    LogContent(content);
+                }
             }
         }
 
-        internal static void Log(this IDbCommand command)
+        private static void LogContent(object content)
         {
             if (loggingAction != null)
             {
-                loggingAction($"Executed: {command.CommandText}");
-
-                if (command.Parameters.Count > 0)
-                {
-                    var content = "With parameters:";
-
-                    foreach (IDataParameter parameter in command.Parameters)
-                    {
-                        content += Environment.NewLine;
-                        content += $"  - @{parameter.ParameterName} = {parameter.Value} of type: {parameter.DbType}";
-                    }
-
-                    loggingAction(content);
-                }
-
-                loggingAction(new string('=', 30));
+                loggingAction($"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fffffff}|{content}");
             }
         }
 
